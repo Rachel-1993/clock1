@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div class="主要時間區">
+        <img src="" alt="" sizes="" srcset="">
+        <div class="顯示的時間" >25:00</div>
+    </div>
+
+    <div class=" 時間控制器">
+            <div class="時間資訊">
+                <button class="時間控制" id="開始">開始</button>
+                <button class="時間控制" id="暫停">暫停</button>
+                <button class="時間控制" id="停止">停止</button>
+                <button class="時間控制" id="歸零">歸零</button>
+            </div>
+        </div>
+        <div class="時間輸入區">
+            <label for="輸入工作時間">任務時間</label>
+            <input type="number" id="輸入工作時間">
+            <!-- 上下兩種寫法都行 -->
+            <label>休息時間
+                <input type="number" id="輸入休息時間">
+            </label>
+        </div>
+        <div class="任務輸入區">
+            <label for="輸入任務名稱">任務名稱</label>
+            <input type="text" id="輸入任務名稱">
+            <label for="番茄任務">已完成任務</label>
+            <ul id="番茄任務"></ul>
+        </div>
+
+        <script>
+            const pomodoroTimer = document.querySelector("#顯示的時間");
+            const startButton = document.querySelector("#開始");
+            const pauseButton = document.querySelector("#暫停");
+            const stopButton = document.querySelector("#停止");
+            let ClockRun = false;
+            let howlongworktime = 1500; // = 25 mins
+            let otherbreaktime = 1500; //目前時段剩餘時間
+            let howlongbreaktime = 300; // ＝ 5mins
+
+            startButton.addEventListener("click", () => {//add 增加 Event Listener<=監聽 事件
+                toggleClock();//切換toggle 時鐘clock
+            });
+            pauseButton.addEventListener("click", () => {
+                toggleClock();
+            });
+            stopButton.addEventListener("click", () => {
+                toggleClock(true);
+            });
+            //那怎麼切換呢? 下面設定切換的規則//
+            const toggleClock = (reset) => {
+                if (reset) {
+                    // STOP THE TIMER
+                    stopClock();
+                } else {//無法自訂時間
+                        if (ClockRun === true) {
+                            ClockRun = false; // PAUSE THE TIMER  
+                        } else {
+                            ClockRun = true;// START THE TIMER  
+                        }
+                    //以下是新的 可以定時間
+                    if (isClockStop) {
+                        setUpdatclock();
+                        isClockStop= false;
+                    }
+                }
+            };
+            clockTime = setInterval(() => {//設置set間隔Interval//
+                otherbreaktime--;
+                nowpomodoroothertime();
+            }, 1000);
+            if (ClockRun == true) {
+                clearInterval(clockTime);
+                ClockRun = false;
+            }else {
+                clockTime = setInterval(() => {
+                    stepDown();//讓計數器持續減少
+                    }, 1000);
+                }
+
+            const nowpomodoroothertime = () => {
+                //展示目前任務的剩下時間
+                const leftsec = otherbreaktime;
+                let result = "";
+                const seconds= leftsec % 60;
+                const minutes = parseInt(leftsec / 60) % 60;
+                let hours = parseInt(leftsec / 3600);
+                // add leading zeroes if it's less than 10
+                function addLeadingZeroes(time) {
+                    return time < 10 ? `0${time}` : time;
+                }
+                if (hours > 0) result += `${hours}:`;
+                result += `${addLeadingZeroes(minutes)}:${addLeadingZeroes(seconds)}`;
+                pomodoroTimer.innerText = result.toString();
+            };
+
+            const stopClock = () => {
+                //第一版 不能自己輸入時間
+                //     // 1 重置目前設定的計時器
+                //     clearInterval(鬧鐘時間);
+                //     // 2 把計時器切換到停止
+                //     ClockRun = false;
+                //     // 把目前時段剩下的時間切換回原始設定值
+                //     現剩時間 = howlongworktime;
+                //     // 更新目前顯示在畫面上的時間
+                //     當前任務剩餘時間();
+                //以下是新的可以輸入時間
+                setUpdatclock();
+                showtastdoc(type);//顯示到目前為止在此會話中花費的時間
+                clearInterval(clockTime);
+                isClockStopped = true;
+                ClockRun = false;
+                otherbreaktime = howlongworktime;
+                nowpomodoroothertime();
+                type = "Work";//重置任務類型
+                nowtastspenttime = 0;
+            };
+
+            let type = "Work";
+            let nowtastspenttime = 0;
+            const stepDown = () => {
+                if (otherbreaktime > 0) {
+                    otherbreaktime--;
+                    nowtastspenttime++; // 累積花費的時間持續增加
+                } else if (otherbreaktime === 0) {
+                    timeSspentInCurrentSession = 0; //重置累積花費的時間
+                    if (type === "Work") {
+                        otherbreaktime = howlongbreaktime;
+                        showtastdoc("Work");
+                        type = "Break";
+                        nowtasttag.value = 'Break';
+                        nowtasttag.disabled = true;
+                    } else {
+                        otherbreaktime = howlongworktime;
+                        type = "Work";
+                        if (nowtasttag.value === 'Break') {
+                            nowtasttag.value = worktasttag;
+                        }
+                        nowtasttag.disabled = false;
+                        showtastdoc("Break");
+                    }
+                }
+                nowpomodoroothertime();
+            };
+            const showtastdoc = type => {
+                const tastlist = document.querySelector("#番茄任務");
+                // append li to it
+                const li = document.createElement("li");
+                let tasttag = type;
+                let elapsedTime = parseInt(nowtastspenttime / 60);
+                elapsedTime = elapsedTime > 0 ? elapsedTime : "< 1";
+
+                const text = document.createTextNode(`${ tasttag } : ${經過的時間} min`);
+                li.appendChild(text);
+                tastlist.appendChild(li);
+            };
+            const showtastdoc = type => {
+                if (type === "Work") {
+                    tasttag  = nowtasttag.value ? currentTaskLabel.value : "Work";
+                    worktasttag =  tasttag ;
+                } else {
+                    tasttag  = "Break";
+                }
+            };
+    
+            let updateworktime;
+            let updatebreaktime;
+            let inputworktime= document.querySelector("#輸入工作時間");
+            let inputbreaktime = document.querySelector("#輸入休息時間");
+
+            inputworktime.value = "25";
+            inputbreaktime.value = "5";
+            inputworktime.addEventListener("input", () => {
+                updateworktime = mintosec(inputworktime.value);
+            });
+
+            inputbreaktime.addEventListener("input", () => {
+                updatebreaktime = mintosec(inputbreaktime.value);
+            });
+
+            const mintosec = mins => {
+                return mins * 60;
+            };
+            const setUpdatclock = () => {
+                if (type === "Work") {
+                    otherbreaktime = updateworktime
+                        ? updateworktime
+                        : howlongworktime;
+                        howlongworktime = otherbreaktime;
+                } else {
+                    otherbreaktime = updatebreaktime
+                        ? updatebreaktime
+                        : howlongbreaktime;
+                        howlongbreaktime = otherbreaktime;
+                }
+            };
+            let isClockStop = true;
+        </script>
+</body >
+</html >

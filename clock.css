@@ -1,0 +1,184 @@
+@import url(https://fonts.googleapis.com/earlyaccess/cwtexfangsong.css);
+.主要執行區{
+    background-image: linear-gradient(to top, #9890e3 0%, #f4b1b1 100%);
+    /* background-color: brown; */
+    /* font-family: 'Noto Serif TC', serif; */
+    font-family: ‘cwTeXFangSong’, serif;
+    font-weight:300;
+    color: #e8d5f5;
+    padding: 10px 20%;
+    margin: -10px;
+
+    /* 背景切換  工作中 #b1f4cf 短休 #e4b1f4長休 #f4b1b1 */
+}
+span{
+    font-size: 20px;
+}
+.設定區{
+    display: inline-block;
+    width: 100%;
+    margin:auto;
+    height:60px;
+    padding: 10px;
+    font-size: 1.5em;
+    border-radius:15px;
+    color: #0a6942;
+    margin-top:3px;
+}
+input[type="number"]{
+    width:65px;
+    padding: 1px 10px; border:2px #4a5f2fb0 solid;
+    font-size: 36px;
+    cursor:pointer;
+    border-radius: 15px;
+    text-align:center;
+}
+input[type="text"]{
+    padding:5px 15px; border:2px black solid;
+    font-size: 36px;
+    cursor:pointer;
+    border-radius: 5px; }
+#設定{
+    border:none;
+    background-color :rgba(0, 0, 0, 0.26);
+    border-radius:15px;
+    margin-top:3px;
+}   
+#設定 img{
+    border-radius:30px;
+    width: 3em;
+}
+/* ------------------------------------------------------------------------- */
+.時間工作區{
+    /* border:2px #3a519d solid; */
+    height:250px;
+    background-color:#12108042;/*原本是#3a519d*/ 
+    padding:15px 20px;
+    border-radius:15px;
+    margin: auto;
+}
+#TimeText{
+    text-align: center;
+    font-size: 180px;
+    color: #3ad197;
+    border-radius:15px;
+    margin-top: 0px;
+}
+#工作區__三紐{
+    text-align: center;
+    
+}
+#工作區__三紐 button{
+    font-size: 36px;
+    border-radius:15px;
+    color: hsl(223, 87%, 70%);
+    background-color:#3a519d2f;
+    transition: color 0.25s ease-in-out, transform 0.25s ease-in-out;
+
+}
+/* background-image: linear-gradient(120deg, #a6c0fe 0%, #f68084 100%); */
+
+#工作區__三紐 button:hover {
+    transform: scale(1.05);
+    color:#3ad197;
+}
+#工作區__三紐 button:active {
+    transform: scale(.9);
+}
+
+.始停{
+    text-align: center;
+    padding: 10px 0 ;
+    letter-spacing: 20px;
+    
+}
+.始停 img{
+    width: 2.5rem;
+}
+.始停 button{
+    border:none;
+    border-radius:15px;
+    background-color: rgba(0, 0, 0, 0.26);
+} 
+
+/*  ------------------------------------------------------------------------- */ 
+/* .經典語錄區{
+    border:2px blue solid;
+    width: 100%;
+    height: 50px;
+    text-align:center; 
+} */
+.Quotations {
+    font-family:'Comic Sans MS';
+    font-size:2em;
+    line-height:0.8em;
+    color:#3ad197;
+    background-color: rgba(0, 0, 0, 0.26);
+    padding:1.5em;
+    border-radius:15px;
+    
+    }
+/*  ------------------------------------------------------------------------- */ 
+.任務工作區{
+    /* background-color: rgba(5, 100, 13, 0.548); */
+}
+#任務3點{
+    display: inline-block;
+    width:80%;
+    height:25px;
+    color: rgb(162, 253, 218); 
+}
+/*  ------------------------------------------------------------------------- */ 
+.文字介紹區{
+    background-image: linear-gradient(to top,#330867 0%,  #9890e3 100%);
+    /* font-family: 'Noto Serif TC', serif; */
+    font-family: ‘cwTeXFangSong’, serif;
+    font-weight:300;
+    color: #c3e5db;
+    margin: -10px -10px;
+    padding: 5% 10%;
+}
+.主文{
+    background-color: #354a8f ;
+    border-radius:15px;
+    border: 10px #354a8f ;
+}
+.步驟{
+    background-color: #354a8f ;
+    border-radius:15px;
+    border: 10px #354a8f ;
+}
+.utvideo{
+    position: relative;
+    height: 0;
+    padding-bottom: 56.25%;
+}
+.utvideo iframe {
+    position: absolute;
+    top: 0;
+    left:0;
+    width:90%;
+    height:90%;
+}
+a {
+    text-decoration:none;
+}
+a:link {/* 設定還沒瀏覽過的連結樣式 */
+color: #c3e5db;
+}
+a:visited {/* 設定已經瀏覽過的連結樣式 */
+color: #97c0d0;
+}
+a:hover {/* 設定滑鼠移到連結上的樣式 */
+color: #28376b;
+}
+a:active {/* 設定正在被點選的連結樣式 : #fff030*/
+color:#1a15cf; 
+}
+#番茄書照片{
+    width: 300px;
+    height: 250;
+}
+
+
+

@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./clock.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC&display=swap" rel="stylesheet">
+    <title>Document</title>
+
+</head>
+
+<body>
+    <!--TODO: 滑動smos  bgcolor="#07521a"   - -->
+    <div class="主要執行區">
+        <div class="設定區">
+            <button type="button" id="報告">報告</button>
+            <button type="button" id="設定">設定</button>
+
+        </div>
+
+        <div class="時間工作區">
+            <button type="button" id="工作中">工作中</button><!-- 變換底色藍色與方框還有變成正向經典語錄-->
+            <button type="button" id="短休">短休</button><!-- 變換底色綠色與方框還有變成日常語錄-->
+            <button type="button" id="長休">長休</button><!-- 變換底色藍綠深色與方框還有變成負面經典語錄-->
+
+            <p id="mint">分*秒*回</p>
+
+            <p id="TimeText">30:00</p>
+
+            <button class="始停" id="開始" type="button" onclick="StartTimer()">開始</button>
+            <button class="始停" id="停止" type="button" onclick="StopTimer()">停止</button>
+            <button class="始停" id="暫停" type="button">暫停</button>
+        </div>
+
+        <div class="經典語錄區">
+            <!-- 寫一個變數裡面搭配id=工作中/短休/長休做更換 -->
+            <p id="語錄">你有多自律，就有多自由</p>
+        </div>
+
+        <div class="任務工作區">
+            <span>任務</span>
+            <img id="任務3點" src="" alt="任務設定" sizes="50px" srcset="">
+            <br>
+            <button type="button" name="b7" onclick="">+任務</button>
+
+        </div>
+    </div>
+    <div class="文字介紹區">
+        <h2>什麼是番茄時鐘?</h2>
+        <ul class="主文">
+            <li>番茄鐘也就是廚房裡的計時器（外表長得像番茄），一個番茄鐘只有25分鐘，
+                不可打斷、不可分割，沒有半個或1/4個番茄鐘，每天需要先檢視該做的事，
+                並預先為每項任務規劃需要多少個番茄鐘才能完成，執行任務時，當一個番茄鐘結束，
+                必須間歇休息5分鐘，馬上放下工作，趁機起來走一走、喝杯水、想一下放假去哪裡玩、
+                跟同事聊天說笑……讓頭腦消化吸收剛才25分鐘的工作內容。</li>
+            <li>但休息時間不可做很費心神的活動，例如：跟同事聊工作、寫電子郵件、打重要的電話…，
+                避免妨礙頭腦整合，影響下一個番茄鐘的專注度。</li>
+            <li>如果規劃一項工作超過5到7個番茄鐘，就表示這件事太過複雜，必須拆解成小事項。</li>
+        </ul>
+        <h2>番茄工作法的5個基本步驟：</h2>
+        <ol class="步驟">
+            <li>決定要完成的任務</li>
+            <li>設定計時器至 n 分鐘（通常為25分鐘）。</li>
+            <li>持續工作至計時器提示(時間到)，並紀錄第一節完成。</li>
+            <li>短暫休息3-5分鐘。（短休）</li>
+            <li>開始下一節任務</li>
+            <li>根據任務大小有實際不同的節數，但通常每四個小節，休息15-30分鐘。（長休）</li>
+        </ol>
+        <p>介紹影片</p>
+        <iframe width="560" height="315" src="https://www.youtube.com/embed/BdwdENBrk2c" title="YouTube video player"
+            frameborder="0px"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen></iframe>
+
+        <iframe width="560" height="315" src="https://www.youtube.com/embed/L5FIsrirPdc" title="YouTube video player"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen></iframe>
+        <p>其他相關文章</p>
+        番茄工作法的常見困擾：被干擾、分心的番茄鐘怎麼辦？| 經理人 Managertoday
+        https://www.managertoday.com.tw/articles/view/59408?utm_source=copyshare
+        影片教學 / 什麼是番茄鐘工作法？如何實踐？短時間專注衝刺真的有效嗎？| 經理人 Managertoday
+        https://www.managertoday.com.tw/articles/view/59352?utm_source=copyshare
+        唐鳳也推的「番茄鐘工作法」怎麼用？沒懂這 3 原則，超容易失敗| 經理人 Managertoday
+        https://www.managertoday.com.tw/books/view/59388?utm_source=copyshare
+        待辦事項總是做不完！你是否規畫了「不可能達成」的一日行程？| 經理人 Managertoday
+        https://www.managertoday.com.tw/articles/view/62009?utm_source=copyshare
+        「番茄鐘工作法」原創者的 17 個原則！一次看懂| 經理人 Managertoday
+        https://www.managertoday.com.tw/articles/view/59410?utm_source=copyshare
+        精實的小習慣！4 原則打造超順暢的流程，工作永遠提早完成| 經理人 Managertoday
+        https://www.managertoday.com.tw/articles/view/61667?utm_source=copyshare
+        <p>好書連結</p>
+        https://www.books.com.tw/products/0010844785?utm_source=www&utm_medium=share&utm_content=copy&utm_campaign=product&utm_term=0010844785
+        <p>製作者:Rachel 110/04/26</p>
+    </div>
+
+    <script>
+        const clockTimer = document.querySelector('mint');
+        // console.log(typeof clockTimer);
+        const startButton = document.querySelector("#開始");
+        const pauseButton = document.querySelector("#暫停");
+        const stopButton = document.querySelector("#停止");
+        let ClockRun = false;
+        let howlongworktime = 1500; // = 25 mins
+        let othertasttime = 1500; //目前時段剩餘時間
+        let howlongbreaktime = 300; // ＝ 5mins
+        
+        const NowPomodoroOtherTime = () => {
+            //展示目前任務的剩下時間
+            const leftsec = othertasttime;
+            let result = "";
+            const seconds = leftsec % 60;
+            const minutes = parseInt(leftsec / 60) % 60;
+            // let hours = parseInt(leftsec / 3600);
+            // add leading zeroes if it's less than 10
+            function addLeadingZeroes(time) {
+                return time < 10 ? `0${time}` : time.toString();
+            }
+            // if (hours > 0) result += `${hours}:`;
+            result += `${addLeadingZeroes(minutes)}:${addLeadingZeroes(seconds)}`;
+            document.getElementById('TimeText').innerText = result.toString();
+        };
+        function StartTimer() {
+            realTime = setInterval(() => {
+                // decrease time left / increase time spent
+                othertasttime--;
+                NowPomodoroOtherTime()
+                howlongworktime--;
+            }, 1000);
+        }
+        function StopTimer() {
+            clearInterval(realTime);
+        }
+        // clearInterval(realTime)
+        // document.getElementById('TimeText').innerHTML = `<h2>${howlongworktime}</h2>`
+    
+    </script>
+</body>
+
+</html>

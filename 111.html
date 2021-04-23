@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div class="主要時間區">
+        <img src="" alt="" sizes="" srcset="">
+        <div class="顯示的時間" >25:00</div>
+    </div>
+
+    <div class=" 時間控制器">
+            <div class="時間資訊">
+                <button class="時間控制" id="開始">開始</button>
+                <button class="時間控制" id="暫停">暫停</button>
+                <button class="時間控制" id="停止">停止</button>
+                <button class="時間控制" id="歸零">歸零</button>
+            </div>
+        </div>
+        <div class="時間輸入區">
+            <label for="輸入工作時間">任務時間</label>
+            <input type="number" id="輸入工作時間">
+            <!-- 上下兩種寫法都行 -->
+            <label>休息時間
+                <input type="number" id="輸入休息時間">
+            </label>
+        </div>
+        <div class="任務輸入區">
+            <label for="輸入任務名稱">任務名稱</label>
+            <input type="text" id="輸入任務名稱">
+            <label for="番茄任務">已完成任務</label>
+            <ul id="番茄任務"></ul>
+        </div>
+
+        <script>
+            const 番茄時間 = document.querySelector("#顯示的時間");
+            const 開始按鈕 = document.querySelector("#開始");
+            const 暫停按鈕 = document.querySelector("#暫停");
+            const 停止按鈕 = document.querySelector("#停止");
+            let 時鐘在運轉 = false;
+            let 任務時間多久 = 1500; // = 25 mins
+            let 現剩時間 = 1500; //目前時段剩餘時間
+            let 休息時間多久 = 300; // ＝ 5mins
+
+            開始按鈕.addEventListener("click", () => {//add 增加 Event Listener<=監聽 事件
+                toggleClock();//切換toggle 時鐘clock
+            });
+            暫停按鈕.addEventListener("click", () => {
+                toggleClock();
+            });
+            停止按鈕.addEventListener("click", () => {
+                toggleClock(true);
+            });
+            //那怎麼切換呢? 下面設定切換的規則//
+            const toggleClock = (reset) => {
+                if (reset) {
+                    // STOP THE TIMER
+                    停止鬧鐘();
+                } else {
+                    //無法自訂時間
+                        if 
+                        (時鐘在運轉 === true) {
+                            // PAUSE THE TIMER
+                            時鐘在運轉 = false;
+                        } else {
+                            // START THE TIMER
+                            時鐘在運轉 = true;
+                        }
+                    //以下是新的 可以定時間
+                    if (時鐘停止) {
+                        設定更新的鬧鐘();
+                        時鐘停止 = false;
+                    }
+                }
+            };
+            鬧鐘時間 = setInterval(() => {//設置set間隔Interval//
+                現剩時間--;
+                當前任務剩餘時間();
+            }, 1000);
+            if (時鐘在運轉 == true) {
+                clearInterval(鬧鐘時間);
+                時鐘在運轉 = false;
+            }else {
+                鬧鐘時間 = setInterval(() => {
+                        設定下降();//讓計數器持續減少
+                    }, 1000);
+                }
+
+            const 當前任務剩餘時間 = () => {
+                //展示目前任務的剩下時間
+                const 剩下秒數 = 現剩時間;
+                let 結果 = "";
+                const 秒數 = 剩下秒數 % 60;
+                const 分鐘 = parseInt(剩下秒數 / 60) % 60;
+                let hours = parseInt(剩下秒數 / 3600);
+                // add leading zeroes if it's less than 10
+                function addLeadingZeroes(time) {
+                    return time < 10 ? `0${time}` : time;
+                }
+                if (hours > 0) 結果 += `${hours}:`;
+                結果 += `${addLeadingZeroes(分鐘)}:${addLeadingZeroes(秒數)}`;
+                番茄時間.innerText = 結果.toString();
+            };
+
+            const 停止鬧鐘 = () => {
+                //第一版 不能自己輸入時間
+                //     // 1 重置目前設定的計時器
+                //     clearInterval(鬧鐘時間);
+                //     // 2 把計時器切換到停止
+                //     時鐘在運轉 = false;
+                //     // 把目前時段剩下的時間切換回原始設定值
+                //     現剩時間 = 任務時間多久;
+                //     // 更新目前顯示在畫面上的時間
+                //     當前任務剩餘時間();
+                //以下是新的可以輸入時間
+                設定更新的鬧鐘();
+                顯示任務紀錄(type);//顯示到目前為止在此會話中花費的時間
+                clearInterval(鬧鐘時間);
+                isClockStopped = true;
+                時鐘在運轉 = false;
+                現剩時間 = 任務時間多久;
+                當前任務剩餘時間();
+                type = "Work";//重置任務類型
+                當前任務花費時間 = 0;
+            };
+
+            let type = "Work";
+            let 當前任務花費時間 = 0;
+            const 設定下降 = () => {
+                if (現剩時間 > 0) {
+                    現剩時間--;
+                    當前任務花費時間++; // 累積花費的時間持續增加
+                } else if (現剩時間 === 0) {
+                    timeSspentInCurrentSession = 0; //重置累積花費的時間
+                    if (type === "Work") {
+                        現剩時間 = 休息時間多久;
+                        顯示任務紀錄("Work");
+                        type = "Break";
+                        當前任務標籤.value = 'Break';
+                        當前任務標籤.disabled = true;
+                    } else {
+                        現剩時間 = 任務時間多久;
+                        type = "Work";
+                        if (當前任務標籤.value === 'Break') {
+                            當前任務標籤.value = 工作任務標籤;
+                        }
+                        當前任務標籤.disabled = false;
+                        顯示任務紀錄("Break");
+                    }
+                }
+                當前任務剩餘時間();
+            };
+            const 顯示任務紀錄 = type => {
+                const 任務列表 = document.querySelector("#番茄任務");
+                // append li to it
+                const li = document.createElement("li");
+                let 任務標籤 = type;
+                let 經過的時間 = parseInt(當前任務花費時間 / 60);
+                經過的時間 = 經過的時間 > 0 ? 經過的時間 : "< 1";
+
+                const text = document.createTextNode(`${任務標籤} : ${經過的時間} min`);
+                li.appendChild(text);
+                任務列表.appendChild(li);
+            };
+            const 顯示任務紀錄 = type => {
+                if (type === "Work") {
+                    任務標籤 = 當前任務標籤.value ? currentTaskLabel.value : "Work";
+                    工作任務標籤 = 任務標籤;
+                } else {
+                    任務標籤 = "Break";
+                }
+            };
+            let 更新的工作時間;
+            let 更新的休息時間;
+            let 工作時間輸入 = document.querySelector("#輸入工作時間");
+            let 休息時間輸入 = document.querySelector("#輸入休息時間");
+
+            工作時間輸入.value = "25";
+            休息時間輸入.value = "5";
+            工作時間輸入.addEventListener("input", () => {
+                更新的工作時間 = 分鐘轉秒數(工作時間輸入.value);
+            });
+
+            休息時間輸入.addEventListener("input", () => {
+                更新的休息時間 = 分鐘轉秒數(休息時間輸入.value);
+            });
+
+            const 分鐘轉秒數 = mins => {
+                return mins * 60;
+            };
+            const 設定更新的鬧鐘 = () => {
+                if (type === "Work") {
+                    現剩時間 = 更新的工作時間
+                        ? 更新的工作時間
+                        : 任務時間多久;
+                    任務時間多久 = 現剩時間;
+                } else {
+                    現剩時間 = 更新的休息時間
+                        ? 更新的休息時間
+                        : 休息時間多久;
+                    休息時間多久 = 現剩時間;
+                }
+            };
+            let 時鐘停止 = true;
+
+
+            //XXX.classmate
+        // realTime = setInterval(() => {
+        //     // decrease time left / increase time spent
+        //     // CurrentCountdown--;
+        //     // NowPomodoroOtherTime()
+        //     WorkTimeDefault--;
+        //     document.getElementById('asd').innerHTML = `<h2>${WorkTimeDefault}</h2>`
+        // }, 1000);//同學的寫法
+        // clearInterval(realTime)
+
+
+
+        //我的寫法  太長了 阿昇優化過
+        // function WorkSlogon() {
+        //     var x = document.getElementById("#工作語錄");
+        //     var y = document.getElementById("#短休語錄");
+        //     var z = document.getElementById("#長休語錄");
+        //     x.style.display = "block";
+        //     y.style.display = "none";
+        //     z.style.display = "none";
+        // }
+
+        // function ShortBreakSlogon() {
+        //     var x = document.getElementById("#工作語錄");
+        //     var y = document.getElementById("#短休語錄");
+        //     var z = document.getElementById("#長休語錄");
+        //     x.style.display = "none";
+        //     y.style.display = "block";
+        //     z.style.display = "none";
+        // }
+
+        // function LongBreakSlogon() {
+        //     var x = document.getElementById("#工作語錄");
+        //     var y = document.getElementById("#短休語錄");
+        //     var z = document.getElementById("#長休語錄");
+        //     x.style.display = "none";
+        //     y.style.display = "none";
+        //     z.style.display = "block";
+        // }
+</body >
+</html >

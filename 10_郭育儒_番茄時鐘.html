@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./clock.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC&display=swap" rel="stylesheet">
+    <title>Document</title>
+
+</head>
+
+<body>
+    <!--TODO: 希望未來增加的功能:網頁慢慢滑動/改滑動菜單--->
+
+    <div class="主要執行區" id="mainwork">
+        <div class="設定區">
+
+            <div class="時間輸入區">
+                <label for="InputWorkTime">工作時間</label>
+                <input type="number" id="InputWorkTime" min="1" max="60" value="25">
+                <span>分</span>
+                <!-- 上下兩種寫法都行 -->
+                <label>短休時間
+                    <input type="number" min="1" max="10" id="InputShortBreakTime" value="5">
+                </label>
+                <span>分</span>
+                <label for="InputLongBreakTime">長休時間</label>
+                <input type="number" min="1" max="30" id="InputLongBreakTime" value="15">
+                <span>分</span>
+
+                <!-- <button type="button" id="報告">報告</button> 學完資料庫後更新 -->
+                <button type="button" id="設定" onclick="SaveSetting()"><img src="./image/上傳.ico" alt=""></button>
+            </div>
+
+        </div>
+
+        <div class="時間工作區">
+            <div id="工作區__三紐">
+                <button type="button" id="工作中" onclick="DoWorkTask()">工作中</button>
+                <!-- 時間預設25 背景藍色 工作語錄-->
+                <button type="button" id="短休" onclick="DoShortBreakTask()">短休</button>
+                <!-- 時間預設5 背景綠綠色 短休語錄-->
+                <button type="button" id="長休" onclick="DoLongBreakTask()">長休</button>
+                <!-- 時間預設15 背景粉紅色 長休語錄-->
+            </div>
+
+            <p id="TimeText">25:00</p> <!-- 數字顯示的地方 -->
+        </div>
+
+        <div class="始停">
+            <button id="開始" type="button" onclick="StartTimer()">
+                <img src="./image/開始.ico"></button>
+            <button id="重置" type="button" onclick="TimerReset()">
+                <img src="./image/重置.ico"></button>
+            <button id="暫停" type="button" onclick="StopOneSecondTimer()">
+                <img src="./image/暫停.ico"></button>
+        </div>
+        <div class="經典語錄區">
+            <marquee class="Quotations" id="跑馬燈" direction="left" scrollamount="12" behavior="scroll">
+                <p id="WorkSlogon" style="display:inline">
+                    1、沒有不進步的人生，只有不進取的人!
+                    2、你有多自律，就有多自由。
+                    50、我就廢
+                </p>
+                <p id="ShortBreakSlogon" style="display:none">
+                    1、今天吃啥?
+                    2、晚餐吃粥。
+                    50、運動嗎?
+                </p>
+                <p id="LongBreakSlogon" style="display:none">
+                    1、休息室為了不走路
+                    2、現在放棄 退休就開始了
+                    50、明天再說
+                </p>
+            </marquee>
+        </div>
+        <!-- 任務部份等資料庫學會後 之後新增 -->
+        <!-- <div class="任務工作區">
+            <h2>任務清單</h2>
+            <button type="button" name="b7" onclick="">+任務</button>
+            <div class="任務輸入區">
+                <label for="輸入任務名稱">任務名稱</label>
+                <input type="text" id="輸入任務名稱">
+                <label for="番茄任務">已完成任務</label>
+                <ul id="番茄任務"></ul>
+            </div>
+        </div> -->
+    </div>
+
+    <div class="文字介紹區">
+        <h2>什麼是番茄時鐘?</h2>
+        <ul class="主文">
+            <li>番茄鐘也就是廚房裡的計時器（外表長得像番茄），一個番茄鐘只有25分鐘，
+                不可打斷、不可分割，沒有半個或1/4個番茄鐘，每天需要先檢視該做的事，
+                並預先為每項任務規劃需要多少個番茄鐘才能完成，執行任務時，當一個番茄鐘結束，
+                必須間歇休息5分鐘，馬上放下工作，趁機起來走一走、喝杯水、想一下放假去哪裡玩、
+                跟同事聊天說笑……讓頭腦消化吸收剛才25分鐘的工作內容。</li>
+            <li>但休息時間不可做很費心神的活動，例如：跟同事聊工作、寫電子郵件、打重要的電話…，
+                避免妨礙頭腦整合，影響下一個番茄鐘的專注度。</li>
+            <li>如果規劃一項工作超過5到7個番茄鐘，就表示這件事太過複雜，必須拆解成小事項。</li>
+        </ul>
+        <h2>番茄工作法的5個基本步驟：</h2>
+        <ol class="步驟">
+            <li>決定要完成的任務</li>
+            <li>設定計時器至 n 分鐘（通常為25分鐘）。</li>
+            <li>持續工作至計時器提示(時間到)，並紀錄第一節完成。</li>
+            <li>短暫休息3-5分鐘。（短休）</li>
+            <li>開始下一節任務</li>
+            <li>根據任務大小有實際不同的節數，但通常每四個小節，休息15-30分鐘。（長休）</li>
+        </ol>
+        <h2>介紹影片</h2>
+        <div class="utvideo">
+            <iframe width="560" height="315" src="https://www.youtube.com/embed/BdwdENBrk2c"
+                title="YouTube video player" frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen></iframe>
+        </div>
+        <div class="utvideo">
+            <iframe width="560" height="315" src="https://www.youtube.com/embed/L5FIsrirPdc"
+                title="YouTube video player" frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen></iframe>
+        </div>
+
+        <h2>其他相關文章</h2>
+        <!-- prev: 指定彼此是上一個的關係 (例如屬於同樣主題文章的上一篇)    next: 指定彼此是下一個的關係 (例如屬於同樣主題文章的下一篇) -->
+        <A Target="_blank" rel="_next"
+            Href="https://www.managertoday.com.tw/articles/view/59408?utm_source=copyshare">。番茄工作法的常見困擾：被干擾、分心的番茄鐘怎麼辦？|
+            經理人 Managertoday</A>
+        <br>
+        <A Target="_blank" rel="next"
+            Href="https://www.managertoday.com.tw/articles/view/59352?utm_source=copyshare">。影片教學 /
+            什麼是番茄鐘工作法？如何實踐？短時間專注衝刺真的有效嗎？| 經理人 Managertoday</A>
+        <br>
+        <A Target="_blank" rel="next"
+            Href="https://www.managertoday.com.tw/books/view/59388?utm_source=copyshare">。唐鳳也推的「番茄鐘工作法」怎麼用？沒懂這 3
+            原則，超容易失敗| 經理人 Managertoday</A>
+        <br>
+        <A Target="_blank" rel="next"
+            Href="https://www.managertoday.com.tw/articles/view/62009?utm_source=copyshare">。待辦事項總是做不完！你是否規畫了「不可能達成」的一日行程？|
+            經理人 Managertoday</A>
+        <br>
+        <A Target="_blank" rel="next"
+            Href="https://www.managertoday.com.tw/articles/view/59410?utm_source=copyshare">。「番茄鐘工作法」原創者的 17 個原則！一次看懂|
+            經理人 Managertoday</A>
+        <br>
+        <A Target="_blank" rel="next"
+            Href="https://www.managertoday.com.tw/articles/view/61667?utm_source=copyshare">。精實的小習慣！4
+            原則打造超順暢的流程，工作永遠提早完成| 經理人 Managertoday</A>
+
+        <h2>好書連結</h2>
+        <a href="https://www.books.com.tw/products/0010844785?utm_source=www&utm_medium=share&utm_content=copy&utm_campaign=product&utm_term=0010844785"
+            target="_blank">
+            <img id="番茄書照片" src="./image/番茄時鐘書照.png"></a>
+        <br>
+        <A Target="_parent"
+            Href="https://www.books.com.tw/products/0010844785?utm_source=www&utm_medium=share&utm_content=copy&utm_campaign=product&utm_term=0010844785">間歇高效率的番茄工作法：25分鐘，打造成功的最小單位，幫你杜絕分心、提升拚勁</A>
+
+        <p>製作者:Rachel 110/04/26</p>
+    </div>
+
+    <script>
+        const WorkTimeDefault = 1500; // = 25 mins  //預設時間值
+        const LongBreakDefault = 900; // = 15 mins
+        const ShortBreakDefault = 300; // = 5 mins
+
+        //自定義的時間數值
+        let WorkCustomize;
+        let ShortBreakCustomize;
+        let LongBreakCustomize;
+
+        let WorkCustomizeChange = false;//自定義時間數值狀態設為F
+
+        let CurrentCountdown = WorkTimeDefault; //NOTE:剩餘時間初始化為共作狀態時的預設的時間
+
+
+        let ClockStatus = "Work";//NOTE:現在計時器的狀態,"Work"(工作中)"Take a break"(休息中)
+        let ClockIsRunning = false;//NOTE:現在計時器是否正在倒數,"True"在倒數,"false"沒有在倒數
+
+        let OneSecTimer;
+
+        const CountDownToMinAndSec = () => {
+            //展示目前任務的剩下時間
+            const leftsec = CurrentCountdown;
+            let result = "";
+            const seconds = leftsec % 60;
+            const minutes = parseInt(leftsec / 60) % 60;
+
+            function addLeadingZeroes(time) {
+                return time < 10 ? `0${time}` : time.toString();
+            }
+            return result += `${addLeadingZeroes(minutes)}:${addLeadingZeroes(seconds)}`;
+        };
+
+        function ShowCountDown() {//連結前端與後端的倒數計時器
+            document.getElementById('TimeText').innerText = CountDownToMinAndSec();
+        };
+
+
+        function SaveSetting() {//讓輸入的自訂義值分轉秒 並連結到變數WorkCustomize
+            WorkCustomize = parseInt(document.getElementById("InputWorkTime").value) * 60;
+            ShortBreakCustomize = parseInt(document.getElementById("InputShortBreakTime").value) * 60;
+            LongBreakCustomize = parseInt(document.getElementById("InputLongBreakTime").value) * 60;
+            if (ClockStatus == "Work") {
+                ResetCurrentTimeAsWorkTime();
+            } else if (ClockStatus == "ShortBreak") {
+                ResetCurrentTimeAsShortBreakTime()
+            } else if (ClockStatus == "LongBreak") {
+                ResetCurrentTimeAsLongBreakTime();
+            }
+            ShowCountDown();
+        }
+
+        function DoWorkTask() {//按下按鈕工作中後發生的事
+            ClockStatusToWork();
+            //WorkBackgroud();
+            // document.getElementById('mainwork').style = "background-color:#b1f4cf ";
+            // mainwork.style['background-coior'] = '#f00';
+            ChangeSlogon("Work");//改語錄
+        }
+        function DoShortBreakTask() {//按下短休後發生的事
+            ClockStatusToShortBreak();
+            //ShortBreakBackgroud();
+            ChangeSlogon("ShortBreak");
+        }
+        function DoLongBreakTask() {//按下長休後發生的事
+            ClockStatusToLongBreak();
+            //LongBreakBackgroud();
+            ChangeSlogon("LongBreak");
+        }
+
+        function ChangeSlogon(ClockSlogonStatus) {//語錄變化的判斷式
+            document.getElementById('WorkSlogon').style = "display:none";
+            document.getElementById('LongBreakSlogon').style = "display:none";
+            document.getElementById('ShortBreakSlogon').style = "display:none";
+            switch (ClockSlogonStatus) {
+                case "Work":
+                    document.getElementById('WorkSlogon').style = "display:inline";
+                    break;
+                case "LongBreak":
+                    document.getElementById('LongBreakSlogon').style = "display:inline";
+                    break;
+                case "ShortBreak":
+                    document.getElementById('ShortBreakSlogon').style = "display:inline";
+                    break;
+                default:
+                    break;
+            }
+        }
+        //背景變化的判斷式
+
+
+
+        function StartTimer() {//按下開始後發生的事
+            if (ClockIsRunning === false) {
+                OneSecTimer =
+                    setInterval(
+                        function CountDownStartAndShow() {
+                            CurrentCountdown--;
+                            ShowCountDown();
+                        }, 1000);//NOTE: 1 second
+            }
+            ClockIsRunning = true;
+        }
+        function StopOneSecondTimer() {//按下暫停鍵後會發生的事
+            clearInterval(OneSecTimer);
+            ClockIsRunning = false;
+        }
+
+        function TimerReset() {//當按停止按鈕後會做以下的事
+            clearInterval(OneSecTimer);
+            ClockIsRunning = false;
+            switch (ClockStatus) {//現在計時器的狀態 
+                case "Work":
+                    ResetCurrentTimeAsWorkTime();
+                    break;
+                case "LongBreak":
+                    ResetCurrentTimeAsLongBreakTime();
+                    ClockStatusToLongBreak();
+                    break;
+                case "ShortBreak":
+                    ResetCurrentTimeAsShortBreakTime();
+                    ClockStatusToShortBreak();
+                    break;
+                default:
+                    //NOTE: code flow should not be here
+                    break;
+            }
+            ShowCountDown();
+            //HACK
+            // if (ClockStatus === "Work") {//如果ClockStatus狀態為長休則執行下面函數ClockStatusToLongBreak()
+            //     ClockStatusToWork();
+            // }else if (ClockStatus === "LongBreak") {//如果ClockStatus狀態為長休則執行下面函數ClockStatusToLongBreak()
+            //     ClockStatusToLongBreak();
+            // }else if (ClockStatus === "ShortBreak") {//如果ClockStatus狀態為長休則執行下面函數ClockStatusToLongBreak()
+            //     ClockStatusToShortBreak();
+            // }
+        }
+
+        function ResetCurrentTimeAsWorkTime() {//此函數判斷是用工作預設函數還是自訂函數
+            if (WorkCustomize == null) {  //workkCustomize在上面有用let宣告為變數了
+                CurrentCountdown = WorkTimeDefault;//剩餘時間初始化為工作時的預設時間
+            } else {
+                CurrentCountdown = WorkCustomize;//不然剩餘時間改為自定義的工作時間
+            }
+        }
+
+        function ClockStatusToWork() {//這個函數定義ClockStatus為工作狀態//時間變成工作狀態
+            if (ClockStatus != "Work") {
+                StopOneSecondTimer();
+                ResetCurrentTimeAsWorkTime();
+            }
+            ClockStatus = "Work";
+            ShowCountDown();
+        }
+
+        function ResetCurrentTimeAsLongBreakTime() {//此函數判斷是用長休預設函數還是自訂函數
+            if (LongBreakCustomize == null) {  //LongBreakCustomize在上面有用let宣告為變數了
+                CurrentCountdown = LongBreakDefault;//剩餘時間初始化為長休時的預設時間
+            } else {
+                CurrentCountdown = LongBreakCustomize;//不然剩餘時間改為自定義的長休時間
+            }
+        }
+        function ClockStatusToLongBreak() { //而且上面的長休按鈕有寫被典籍會觸發ClockStatusToLongBreak()
+            if (ClockStatus != "LongBreak") {
+                StopOneSecondTimer();
+                ResetCurrentTimeAsLongBreakTime();
+                ShowCountDown();
+            }
+            ClockStatus = "LongBreak";//這個函數會先把ClockStatus狀態定義為長休
+        }
+
+        function ResetCurrentTimeAsShortBreakTime() {//此函數判斷是用短休預設函數還是自訂函數
+            if (ShortBreakCustomize == null) {  //ShortBreakCustomize在上面有用let宣告為變數了
+                CurrentCountdown = ShortBreakDefault;//剩餘時間初始化為短休時的預設時間
+            } else {
+                CurrentCountdown = ShortBreakCustomize;//不然剩餘時間改為自定義的短休時間
+            }
+        }
+        function ClockStatusToShortBreak() {//這個函數定義ClockStatus為短休狀態
+            if (ClockStatus != "ShortBreak") {
+                StopOneSecondTimer();
+                ResetCurrentTimeAsShortBreakTime();
+                ShowCountDown();
+            }
+            ClockStatus = "ShortBreak";
+        }
+
+    </script>
+</body>
+
+</html>
