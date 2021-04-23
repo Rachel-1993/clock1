@@ -1,6 +1,6 @@
 @import url(https://fonts.googleapis.com/earlyaccess/cwtexfangsong.css);
-.主要執行區{
-    background-image: linear-gradient(to top, #9890e3 0%, #f4b1b1 100%);
+#mainwork{
+    background: linear-gradient(to top, #9890e3 0%, #f4b1b1 100%);
     /* background-color: brown; */
     /* font-family: 'Noto Serif TC', serif; */
     font-family: ‘cwTeXFangSong’, serif;
